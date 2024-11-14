@@ -7,6 +7,7 @@ export interface INft extends IEntity {
   readonly standard: NftStandard;
 
   readonly contractPackageHash: string;
+  readonly contractPackageIcon: Maybe<string>;
   readonly contactName: string;
   readonly owner_reverse_lookup_mode: boolean;
 

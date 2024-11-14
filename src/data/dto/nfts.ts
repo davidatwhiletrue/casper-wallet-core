@@ -19,6 +19,7 @@ export class NftDto implements INft {
     this.trackingId = apiNft?.tracking_id ?? '';
     this.standard = mapNftStandard[apiNft?.token_standard_id ?? 1];
     this.contractPackageHash = apiNft?.contract_package_hash ?? '';
+    this.contractPackageIcon = apiNft?.contract_package?.icon_url ?? null;
     this.contactName = apiNft?.contract_package?.name ?? '';
     this.owner_reverse_lookup_mode = Boolean(
       apiNft?.contract_package?.metadata?.owner_reverse_lookup_mode ?? false,
@@ -35,6 +36,7 @@ export class NftDto implements INft {
   trackingId: string;
   standard: NftStandard;
   contractPackageHash: string;
+  contractPackageIcon: Maybe<string>;
   contactName: string;
   owner_reverse_lookup_mode: boolean;
   timestamp: string;
