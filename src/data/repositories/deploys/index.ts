@@ -1,33 +1,29 @@
 import {
   DeploysError,
   isDeploysError,
-  EMPTY_PAGINATED_RESPONSE,
   DEFAULT_PAGE_LIMIT,
   HttpClientNotFoundError,
   CSPR_API_PROXY_HEADERS,
-  EMPTY_CLOUD_PAGINATED_RESPONSE,
+  EMPTY_PAGINATED_RESPONSE,
   CasperWalletApiUrl,
   IDeploysRepository,
   IGetDeploysParams,
   CloudPaginatedResponse,
-  PaginatedResponse,
   IGetSingleDeployParams,
   DataResponse,
   IDeploy,
-  CasperApiUrl,
+  PaginatedResponse,
 } from '../../../domain';
 import type { IHttpDataProvider, IAccountInfoRepository } from '../../../domain';
 import { getAccountHashFromPublicKey } from '../../../utils';
 import { CsprTransferDeployDto, processDeploy, Cep18TransferDeployDto } from '../../dto';
-import { ExtendedCloudDeploy } from './types';
+import { ExtendedCloudDeploy, ICsprTransferResponse, IErc20TokensTransferResponse } from './types';
 import {
   getAccountHashesFromDeploy,
   getAccountHashesFromDeployActionResults,
 } from '../../dto/deploys/common';
-import { ICsprTransferResponse, IErc20TokensTransferResponse } from './old-types';
 
 export * from './types';
-export * from './old-types';
 
 export class DeploysRepository implements IDeploysRepository {
   constructor(
@@ -57,7 +53,7 @@ export class DeploysRepository implements IDeploysRepository {
       });
 
       if (!resp) {
-        return EMPTY_CLOUD_PAGINATED_RESPONSE;
+        return EMPTY_PAGINATED_RESPONSE;
       }
 
       const rawDeploys = resp.data.map(d => processDeploy(activePublicKey, network, {}, d));
@@ -69,7 +65,9 @@ export class DeploysRepository implements IDeploysRepository {
       });
 
       return {
-        ...resp,
+        itemCount: resp.item_count,
+        pageCount: resp.page_count,
+        pages: resp.pages,
         data: resp.data.map(d =>
           processDeploy(
             activePublicKey,
@@ -93,14 +91,14 @@ export class DeploysRepository implements IDeploysRepository {
     try {
       const accountHash = getAccountHashFromPublicKey(activePublicKey);
 
-      const resp = await this._httpProvider.get<PaginatedResponse<ICsprTransferResponse>>({
-        url: `${CasperApiUrl[network]}/accounts/${accountHash}/transfers`,
+      const resp = await this._httpProvider.get<CloudPaginatedResponse<ICsprTransferResponse>>({
+        url: `${CasperWalletApiUrl[network]}/accounts/${accountHash}/transfers`,
         params: {
           page,
-          limit,
-          with_extended_info: 1,
-          with_amounts_in_currency_id: 1,
+          page_size: limit,
+          includes: 'initiator_public_key,to_public_key,rate(1),deploy',
         },
+        headers: CSPR_API_PROXY_HEADERS,
         errorType: 'getCsprTransferDeploys',
       });
 
@@ -117,7 +115,9 @@ export class DeploysRepository implements IDeploysRepository {
       });
 
       return {
-        ...resp,
+        itemCount: resp.item_count,
+        pageCount: resp.page_count,
+        pages: resp.pages,
         data: resp.data.map(
           d =>
             new CsprTransferDeployDto(
@@ -179,16 +179,18 @@ export class DeploysRepository implements IDeploysRepository {
     try {
       const accountHash = getAccountHashFromPublicKey(activePublicKey);
 
-      const resp = await this._httpProvider.get<PaginatedResponse<IErc20TokensTransferResponse>>({
-        url: `${CasperApiUrl[network]}/erc20-token-actions`,
+      const resp = await this._httpProvider.get<
+        CloudPaginatedResponse<IErc20TokensTransferResponse>
+      >({
+        url: `${CasperWalletApiUrl[network]}/accounts/${accountHash}/ft-token-actions`,
         params: {
-          contract_package_hash: contractPackageHash,
-          account_hash: accountHash,
+          contract_package_hash: contractPackageHash, // TODO do not worked
+          account_identifier: accountHash,
           page,
-          limit,
-          fields: 'contract_package,deploy',
-          with_amounts_in_currency_id: 1,
+          page_size: limit,
+          includes: 'contract_package,deploy',
         },
+        headers: CSPR_API_PROXY_HEADERS,
         errorType: 'getCep18TransferDeploys',
       });
 
@@ -205,7 +207,9 @@ export class DeploysRepository implements IDeploysRepository {
       });
 
       return {
-        ...resp,
+        itemCount: resp.item_count,
+        pageCount: resp.page_count,
+        pages: resp.pages,
         data: resp.data.map(
           d =>
             new Cep18TransferDeployDto(

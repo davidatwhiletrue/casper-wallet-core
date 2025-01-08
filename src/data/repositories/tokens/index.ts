@@ -1,6 +1,5 @@
 import {
   CSPR_COIN,
-  CasperApiUrl,
   isTokensError,
   TokensError,
   HttpClientNotFoundError,
@@ -28,10 +27,12 @@ export class TokensRepository implements ITokensRepository {
       const accountHash = getAccountHashFromPublicKey(publicKey);
 
       const tokensList = await this._httpProvider.get<DataResponse<Erc20Token[]>>({
-        url: `${CasperApiUrl[network]}/accounts/${accountHash}/erc20-tokens`,
+        url: `${CasperWalletApiUrl[network]}/accounts/${accountHash}/ft-token-ownership`,
         params: {
-          fields: 'latest_contract,contract_package',
+          page_size: 100, // TODO pagination?
+          includes: 'contract_package',
         },
+        headers: CSPR_API_PROXY_HEADERS,
         errorType: 'getTokens',
       });
 
@@ -39,7 +40,7 @@ export class TokensRepository implements ITokensRepository {
         return new TokenDto(network, {
           ...(token.contract_package ?? {}),
           balance: token.balance,
-          contractHash: token.latest_contract?.contract_hash,
+          contractHash: token.contract_package.contractHash, // TODO missing?
         });
       });
     } catch (e) {
@@ -92,7 +93,8 @@ export class TokensRepository implements ITokensRepository {
   async getCsprFiatCurrencyRate({ network }: IGetCsprFiatCurrencyRateParams) {
     try {
       const resp = await this._httpProvider.get<IGetCurrencyRateResponse>({
-        url: `${CasperApiUrl[network]}/rates/1/amount`,
+        url: `${CasperWalletApiUrl[network]}/rates/1/amount`,
+        headers: CSPR_API_PROXY_HEADERS,
         errorType: 'getCsprFiatCurrencyRate',
       });
 

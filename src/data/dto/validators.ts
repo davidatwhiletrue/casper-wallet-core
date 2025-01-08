@@ -39,21 +39,21 @@ export class ValidatorDto implements IValidator {
 
 export class ValidatorWithStateDto implements IValidator {
   constructor(apiValidator?: Partial<IApiValidatorWithStake>) {
-    this.id = apiValidator?.validator?.public_key ?? getUniqueId();
-    this.publicKey = apiValidator?.validator?.public_key ?? '';
+    this.id = apiValidator?.bidder?.public_key ?? getUniqueId();
+    this.publicKey = apiValidator?.bidder?.public_key ?? '';
     this.name =
-      apiValidator?.validator?.account_info?.info?.owner?.name ?? formatAddress(this.publicKey);
-    this.delegatorsNumber = apiValidator?.validator?.delegators_number ?? 0;
-    this.totalStake = apiValidator?.validator?.total_stake ?? '0';
+      apiValidator?.validator_account_info?.info?.owner?.name ?? formatAddress(this.publicKey);
+    this.delegatorsNumber = apiValidator?.bidder?.delegators_number ?? 0;
+    this.totalStake = apiValidator?.bidder?.total_stake?.toString() ?? '0';
     this.formattedTotalStake = formatTokenBalance(this.totalStake, CSPR_DECIMALS, 0);
     this.stake = apiValidator?.stake ?? null;
     this.decimalStake = this.stake ? getDecimalTokenBalance(this.stake, CSPR_DECIMALS) : null;
     this.formattedDecimalStake = this.stake ? formatTokenBalance(this.stake, CSPR_DECIMALS) : null;
-    this.fee = `${apiValidator?.validator?.fee ?? '0'}`;
-    this.svgLogo = apiValidator?.validator?.account_info?.info?.owner?.branding?.logo?.svg;
+    this.fee = `${apiValidator?.bidder?.fee ?? '0'}`;
+    this.svgLogo = apiValidator?.validator_account_info?.info?.owner?.branding?.logo?.svg;
     this.imgLogo =
-      apiValidator?.validator?.account_info?.info?.owner?.branding?.logo?.png_256 ??
-      apiValidator?.validator?.account_info?.info?.owner?.branding?.logo?.png_1024;
+      apiValidator?.validator_account_info?.info?.owner?.branding?.logo?.png_256 ??
+      apiValidator?.validator_account_info?.info?.owner?.branding?.logo?.png_1024;
   }
 
   id: string;

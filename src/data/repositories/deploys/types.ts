@@ -1,8 +1,5 @@
-import {
-  ExtendedDeployClTypeResult,
-  ExtendedDeployContractPackageResult,
-  ExtendedDeployEntryPointResult,
-} from './old-types';
+import { Maybe } from '../../../typings';
+import { ContractPackage } from '../tokens';
 
 export enum TransactorHashType {
   'account' = 0,
@@ -254,4 +251,142 @@ export interface AccountInfoNode {
 
 export interface AccountInfoAffiliatedAccount {
   public_key?: string;
+}
+
+export interface ICsprTransferResponse {
+  amount: string;
+  deploy_hash: string;
+  from_purse: string;
+  initiator_account_hash: string;
+  initiator_public_key: string;
+  to_account_hash: string;
+  to_public_key: string;
+  to_purse: string;
+  id: number;
+  timestamp: string;
+  rate?: number;
+  transform_key: string;
+  deploy: ExtendedCloudDeploy;
+}
+
+export interface IErc20TokensTransferResponse {
+  deploy_hash: string;
+  contract_package_hash: string;
+  from_type: Maybe<string>;
+  from_hash: Maybe<string>;
+  from_public_key?: Maybe<string>;
+  to_type: Maybe<string | 'account-hash'>;
+  to_hash: Maybe<string>;
+  to_public_key?: string;
+  erc20_action_type_id: number;
+  amount: string;
+  timestamp: string;
+  block_height: number;
+  ft_action_type_id: number;
+  transform_idx: number;
+  deploy?: ExtendedCloudDeploy;
+  contract_package?: ContractPackage;
+}
+
+export interface IApiDeployArgs {
+  amount?: ExtendedDeployClTypeResult;
+  spender?: ExtendedDeployClTypeResult;
+  bsc_recipient_address?: ExtendedDeployClTypeResult;
+  contract_hash_str?: ExtendedDeployClTypeResult;
+  recipient?: ExtendedDeployClTypeResult;
+  token_id?: ExtendedDeployClTypeResult;
+  token_ids?: ExtendedDeployClTypeResult;
+  token_meta?: ExtendedDeployClTypeResult;
+  id?: ExtendedDeployClTypeResult;
+  target?: ExtendedDeployClTypeResult;
+  contract_name?: ExtendedDeployClTypeResult;
+  decimals?: ExtendedDeployClTypeResult;
+  initial_supply?: ExtendedDeployClTypeResult;
+  name?: ExtendedDeployClTypeResult;
+  symbol?: ExtendedDeployClTypeResult;
+  amount_in?: ExtendedDeployClTypeResult;
+  amount_out_min?: ExtendedDeployClTypeResult;
+  deadline?: ExtendedDeployClTypeResult;
+  path?: ExtendedDeployClTypeResult;
+  to?: ExtendedDeployClTypeResult;
+  validator?: ExtendedDeployClTypeResult;
+  new_validator?: ExtendedDeployClTypeResult;
+}
+
+export interface ExtendedDeployClTypeResult {
+  cl_type: CLTypeTypeResult;
+  parsed: CLTypeParsedResult | Maybe<string>;
+}
+
+type CLTypeTypeResult = CLTypeMapResult | CLTypeOptionResult | string;
+
+type CLTypeParsedResult =
+  | CLTypeParsedListResult
+  | CLTypeParsedAccountResult
+  | CLTypeMapParsedResult
+  | CLTypeParsedHashResult
+  | string
+  | number;
+
+export interface CLTypeMapResult {
+  Map: {
+    key: string;
+    value: string;
+  };
+}
+
+export interface CLTypeMapParsedResult {
+  key: string;
+  value: string;
+}
+
+export interface CLTypeOptionResult {
+  Option: string;
+}
+
+export interface CLTypeParsedAccountResult {
+  Account: string;
+}
+export interface CLTypeParsedHashResult {
+  Hash: string;
+}
+
+type CLTypeParsedListResult = (CLTypeMapParsedResult | string)[];
+
+export interface ExtendedDeployContractPackageResult {
+  contract_description: Maybe<string>;
+  name: Maybe<string>;
+  contract_package_hash: string;
+  contract_type_id: Maybe<number>;
+  owner_public_key: Maybe<string>;
+  timestamp: string;
+  deploys_num?: number;
+  metadata?: ExtendedDeployContractPackageMetadata;
+  icon_url?: string;
+  latest_version_contract_type_id?: number;
+}
+
+export interface ExtendedDeployEntryPointResult {
+  action_type_id: null;
+  contract_hash: Maybe<string>;
+  contract_package_hash: Maybe<string>;
+  id: Maybe<string>;
+  name: Maybe<string>;
+}
+
+export interface ExtendedDeployContractPackageMetadata {
+  symbol: string;
+  decimals: number;
+  balances_uref: string;
+  total_supply_uref: string;
+  burn_mode?: string;
+  holder_mode?: string;
+  identifier_mode?: string;
+  metadata_mutability?: string;
+  minting_mode?: string;
+  nft_kind?: string;
+  nft_metadata_kind?: string;
+  ownership_mode?: string;
+  whitelist_mode?: string;
+  owner_reverse_lookup_mode?: string;
 }

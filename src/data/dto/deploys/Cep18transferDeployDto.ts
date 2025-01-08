@@ -21,7 +21,6 @@ import { getAccountInfoFromMap, getCsprFiatAmount } from './common';
 import { Maybe } from '../../../typings';
 import { IErc20TokensTransferResponse } from '../../repositories';
 
-/** @deprecated clarity usage */
 export class Cep18TransferDeployDto implements ICep18Deploy {
   constructor(
     activePublicKey: string,
@@ -36,7 +35,7 @@ export class Cep18TransferDeployDto implements ICep18Deploy {
     this.status = 'success'; // transfer cannot have another status
     this.type = 'CEP18';
     this.entryPoint = FTActionType[data?.erc20_action_type_id ?? 2];
-    this.contractName = data?.contract_package?.contract_name ?? '';
+    this.contractName = data?.contract_package?.name ?? '';
     this.iconUrl = data?.contract_package?.icon_url ?? null;
     this.cep18ActionsResult = [];
     this.transfersActionsResult = [];

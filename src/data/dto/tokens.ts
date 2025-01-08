@@ -21,7 +21,7 @@ export class TokenDto implements IToken {
     this.network = apiToken?.network ?? network;
     this.decimals = apiToken?.metadata?.decimals ?? 18;
     this.iconUrl = apiToken?.icon_url ?? null;
-    this.name = apiToken?.contract_name ?? '';
+    this.name = apiToken?.name ?? '';
     this.symbol = apiToken?.metadata?.symbol ?? '';
     this.decimalBalance = getDecimalTokenBalance(this.balance, this.decimals);
     this.formattedDecimalBalance = formatTokenBalance(this.balance, this.decimals);
@@ -98,7 +98,7 @@ export class CsprBalanceDto implements ICsprBalance {
 
 export class TokenFiatRateDto implements ITokenFiatRate {
   constructor(resp?: Partial<IGetCurrencyRateResponse>) {
-    this.rate = Number(resp?.data) || 0;
+    this.rate = Number(resp?.data?.amount) || 0;
     this.currency = 'USD';
   }
 

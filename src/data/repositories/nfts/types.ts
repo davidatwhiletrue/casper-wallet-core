@@ -1,4 +1,4 @@
-import { ExtendedDeployContractPackageResult } from '../deploys/old-types';
+import { ExtendedDeployContractPackageResult } from '../deploys';
 
 export interface NFTTokenMetadataEntry {
   key: string;
@@ -17,7 +17,11 @@ export interface IApiNft {
   metadata: NFTTokenMetadataEntry[];
   offchain_metadata: Record<string, unknown>;
   onchain_metadata: Record<string, unknown>;
-  timestamp: string; //
+  timestamp: string;
+  block_height: number;
+  offchain_metadata_status: number;
+  owner_hash: string;
+  owner_type: number;
 }
 
 export type NFtMetadataEntry = [key: string, value: string];

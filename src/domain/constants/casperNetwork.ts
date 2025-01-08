@@ -8,15 +8,9 @@ export const CasperLiveUrl: Record<CasperNetwork, string> = {
   testnet: 'https://testnet.cspr.live',
 };
 
-/** @deprecated should be replaced with {CasperWalletApiUrl}  */
-export const CasperApiUrl: Record<CasperNetwork, string> = {
-  mainnet: 'https://event-store-api-clarity-mainnet.make.services',
-  testnet: 'https://event-store-api-clarity-testnet.make.services',
-};
-
 export const CasperWalletApiUrl: Record<CasperNetwork, string> = {
-  mainnet: 'https://api.mainnet.casperwallet.io',
-  testnet: 'https://api.testnet.casperwallet.io',
+  mainnet: 'https://cspr-wallet-api.dev.make.services',
+  testnet: 'https://cspr-wallet-api-condor.dev.make.services',
 };
 
 export const OnRampApiUrl = 'https://onramp-api.cspr.click/api';

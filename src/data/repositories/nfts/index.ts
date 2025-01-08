@@ -1,5 +1,5 @@
 import {
-  CasperApiUrl,
+  CasperWalletApiUrl,
   DEFAULT_PAGE_LIMIT,
   EMPTY_PAGINATED_RESPONSE,
   CSPR_API_PROXY_HEADERS,
@@ -7,9 +7,10 @@ import {
   NftsError,
   INftsRepository,
   IGetNftsParams,
-  PaginatedResponse,
+  CloudPaginatedResponse,
   INft,
   NftContentType,
+  PaginatedResponse,
 } from '../../../domain';
 import type { IHttpDataProvider } from '../../../domain';
 import { getAccountHashFromPublicKey } from '../../../utils';
@@ -30,13 +31,14 @@ export class NftsRepository implements INftsRepository {
     try {
       const accountHash = getAccountHashFromPublicKey(publicKey);
 
-      const resp = await this._httpProvider.get<PaginatedResponse<IApiNft>>({
-        url: `${CasperApiUrl[network]}/accounts/${accountHash}/nft-tokens`,
+      const resp = await this._httpProvider.get<CloudPaginatedResponse<IApiNft>>({
+        url: `${CasperWalletApiUrl[network]}/accounts/${accountHash}/nft-tokens`,
         params: {
           page,
-          limit,
-          fields: 'contract_package',
+          page_size: limit,
+          includes: 'contract_package',
         },
+        headers: CSPR_API_PROXY_HEADERS,
         errorType: 'getNfts',
       });
 
@@ -45,7 +47,9 @@ export class NftsRepository implements INftsRepository {
       }
 
       return {
-        ...resp,
+        itemCount: resp.item_count,
+        pageCount: resp.page_count,
+        pages: resp.pages,
         data: (resp?.data ?? []).map(nft => new NftDto(nft)),
       };
     } catch (e) {

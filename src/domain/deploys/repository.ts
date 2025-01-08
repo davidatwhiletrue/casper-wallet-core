@@ -1,10 +1,10 @@
 import { IDeploy } from './entities';
-import { CasperNetwork, CloudPaginatedResponse, PaginatedResponse } from '../common';
+import { CasperNetwork, PaginatedResponse } from '../common';
 import { Maybe } from '../../typings';
 
 export interface IDeploysRepository {
   getSingleDeploy(params: IGetSingleDeployParams): Promise<Maybe<IDeploy>>;
-  getDeploys(params: IGetDeploysParams): Promise<CloudPaginatedResponse<IDeploy>>;
+  getDeploys(params: IGetDeploysParams): Promise<PaginatedResponse<IDeploy>>;
   getCsprTransferDeploys(params: IGetDeploysParams): Promise<PaginatedResponse<IDeploy>>;
   getCep18TransferDeploys(params: IGetDeploysParams): Promise<PaginatedResponse<IDeploy>>;
 }
