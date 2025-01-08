@@ -27,6 +27,7 @@ export class NftsRepository implements INftsRepository {
     publicKey,
     page,
     limit = DEFAULT_PAGE_LIMIT,
+    withProxyHeader = true,
   }: IGetNftsParams): Promise<PaginatedResponse<INft>> {
     try {
       const accountHash = getAccountHashFromPublicKey(publicKey);
@@ -38,7 +39,7 @@ export class NftsRepository implements INftsRepository {
           page_size: limit,
           includes: 'contract_package',
         },
-        headers: CSPR_API_PROXY_HEADERS,
+        ...(withProxyHeader ? { headers: CSPR_API_PROXY_HEADERS } : {}),
         errorType: 'getNfts',
       });
 
@@ -57,11 +58,11 @@ export class NftsRepository implements INftsRepository {
     }
   }
 
-  async deriveNftMediaType(url: string): Promise<NftContentType> {
+  async deriveNftMediaType(url: string, withProxyHeader = true): Promise<NftContentType> {
     try {
       const headers = await this._httpProvider.head({
         url,
-        headers: CSPR_API_PROXY_HEADERS,
+        ...(withProxyHeader ? { headers: CSPR_API_PROXY_HEADERS } : {}),
         errorType: 'deriveNftMediaType',
       });
 

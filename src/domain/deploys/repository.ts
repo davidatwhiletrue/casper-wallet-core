@@ -13,6 +13,7 @@ export interface IGetSingleDeployParams {
   activePublicKey: string;
   network: CasperNetwork;
   deployHash: string;
+  withProxyHeader?: boolean;
 }
 
 export interface IGetDeploysParams {
@@ -21,4 +22,5 @@ export interface IGetDeploysParams {
   page: number;
   limit?: number;
   contractPackageHash?: string;
+  withProxyHeader?: boolean;
 }

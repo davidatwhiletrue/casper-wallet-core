@@ -8,9 +8,11 @@ export interface IValidatorsRepository {
 
 export interface IGetValidatorsParams {
   network: CasperNetwork;
+  withProxyHeader?: boolean;
 }
 
 export interface IGetValidatorsWithStakesParams {
   publicKey: string;
   network: CasperNetwork;
+  withProxyHeader?: boolean;
 }

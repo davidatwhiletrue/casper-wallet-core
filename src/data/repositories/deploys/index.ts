@@ -37,6 +37,7 @@ export class DeploysRepository implements IDeploysRepository {
     page,
     limit = DEFAULT_PAGE_LIMIT,
     contractPackageHash,
+    withProxyHeader = true,
   }: IGetDeploysParams) {
     try {
       const resp = await this._httpProvider.get<CloudPaginatedResponse<ExtendedCloudDeploy>>({
@@ -48,7 +49,7 @@ export class DeploysRepository implements IDeploysRepository {
           includes: 'rate(1),contract_entrypoint,contract_package,transfers,account_info',
           ...(contractPackageHash ? { contract_package_hash: contractPackageHash } : {}),
         },
-        headers: CSPR_API_PROXY_HEADERS,
+        ...(withProxyHeader ? { headers: CSPR_API_PROXY_HEADERS } : {}),
         errorType: 'getDeploys',
       });
 
@@ -87,6 +88,7 @@ export class DeploysRepository implements IDeploysRepository {
     activePublicKey,
     page,
     limit = DEFAULT_PAGE_LIMIT,
+    withProxyHeader = true,
   }: IGetDeploysParams) {
     try {
       const accountHash = getAccountHashFromPublicKey(activePublicKey);
@@ -98,7 +100,7 @@ export class DeploysRepository implements IDeploysRepository {
           page_size: limit,
           includes: 'initiator_public_key,to_public_key,rate(1),deploy',
         },
-        headers: CSPR_API_PROXY_HEADERS,
+        ...(withProxyHeader ? { headers: CSPR_API_PROXY_HEADERS } : {}),
         errorType: 'getCsprTransferDeploys',
       });
 
@@ -132,7 +134,12 @@ export class DeploysRepository implements IDeploysRepository {
     }
   }
 
-  async getSingleDeploy({ deployHash, network, activePublicKey }: IGetSingleDeployParams) {
+  async getSingleDeploy({
+    deployHash,
+    network,
+    activePublicKey,
+    withProxyHeader = true,
+  }: IGetSingleDeployParams) {
     try {
       const resp = await this._httpProvider.get<DataResponse<ExtendedCloudDeploy>>({
         url: `${CasperWalletApiUrl[network]}/deploys/${deployHash}`,
@@ -140,7 +147,7 @@ export class DeploysRepository implements IDeploysRepository {
           includes:
             'rate(1),contract,contract_package,contract_entrypoint,account_info,transfers,nft_token_actions,ft_token_actions',
         },
-        headers: CSPR_API_PROXY_HEADERS,
+        ...(withProxyHeader ? { headers: CSPR_API_PROXY_HEADERS } : {}),
         errorType: 'getSingleDeploy',
       });
 
@@ -175,6 +182,7 @@ export class DeploysRepository implements IDeploysRepository {
     limit = DEFAULT_PAGE_LIMIT,
     activePublicKey,
     contractPackageHash,
+    withProxyHeader = true,
   }: IGetDeploysParams): Promise<PaginatedResponse<IDeploy>> {
     try {
       const accountHash = getAccountHashFromPublicKey(activePublicKey);
@@ -190,7 +198,7 @@ export class DeploysRepository implements IDeploysRepository {
           page_size: limit,
           includes: 'contract_package,deploy',
         },
-        headers: CSPR_API_PROXY_HEADERS,
+        ...(withProxyHeader ? { headers: CSPR_API_PROXY_HEADERS } : {}),
         errorType: 'getCep18TransferDeploys',
       });
 

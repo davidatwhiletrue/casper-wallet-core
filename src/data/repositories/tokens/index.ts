@@ -22,7 +22,7 @@ export * from './types';
 export class TokensRepository implements ITokensRepository {
   constructor(private _httpProvider: IHttpDataProvider) {}
 
-  async getTokens({ network, publicKey }: IGetTokensParams) {
+  async getTokens({ network, publicKey, withProxyHeader = true }: IGetTokensParams) {
     try {
       const accountHash = getAccountHashFromPublicKey(publicKey);
 
@@ -32,7 +32,7 @@ export class TokensRepository implements ITokensRepository {
           page_size: 100, // TODO pagination?
           includes: 'contract_package',
         },
-        headers: CSPR_API_PROXY_HEADERS,
+        ...(withProxyHeader ? { headers: CSPR_API_PROXY_HEADERS } : {}),
         errorType: 'getTokens',
       });
 
@@ -48,7 +48,7 @@ export class TokensRepository implements ITokensRepository {
     }
   }
 
-  async getCsprBalance({ publicKey, network }: IGetCsprBalanceParams) {
+  async getCsprBalance({ publicKey, network, withProxyHeader = true }: IGetCsprBalanceParams) {
     try {
       const resp = await this._httpProvider.get<DataResponse<IGetCsprBalanceResponse>>({
         url: `${CasperWalletApiUrl[network]}/accounts/${publicKey}`,
@@ -56,7 +56,7 @@ export class TokensRepository implements ITokensRepository {
         params: {
           includes: 'delegated_balance,undelegating_balance',
         },
-        headers: CSPR_API_PROXY_HEADERS,
+        ...(withProxyHeader ? { headers: CSPR_API_PROXY_HEADERS } : {}),
       });
 
       return new CsprBalanceDto(resp?.data);
@@ -90,11 +90,14 @@ export class TokensRepository implements ITokensRepository {
     }
   }
 
-  async getCsprFiatCurrencyRate({ network }: IGetCsprFiatCurrencyRateParams) {
+  async getCsprFiatCurrencyRate({
+    network,
+    withProxyHeader = true,
+  }: IGetCsprFiatCurrencyRateParams) {
     try {
       const resp = await this._httpProvider.get<IGetCurrencyRateResponse>({
         url: `${CasperWalletApiUrl[network]}/rates/1/amount`,
-        headers: CSPR_API_PROXY_HEADERS,
+        ...(withProxyHeader ? { headers: CSPR_API_PROXY_HEADERS } : {}),
         errorType: 'getCsprFiatCurrencyRate',
       });
 

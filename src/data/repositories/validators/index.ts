@@ -20,11 +20,11 @@ export * from './types';
 export class ValidatorsRepository implements IValidatorsRepository {
   constructor(private _httpProvider: IHttpDataProvider) {}
 
-  async getValidators({ network }: IGetValidatorsParams) {
+  async getValidators({ network, withProxyHeader = true }: IGetValidatorsParams) {
     try {
       const rpcClient = new RpcClient(new HttpHandler(GrpcUrl[network]));
 
-      const eraInfo = await rpcClient.getEraInfoLatest();
+      const eraInfo = await rpcClient.getEraInfoLatest(); // TODO replace with /auction-metrics
 
       const validatorsList = await this._httpProvider.get<DataResponse<IApiValidator[]>>({
         url: `${CasperWalletApiUrl[network]}/validators`,
@@ -35,7 +35,7 @@ export class ValidatorsRepository implements IValidatorsRepository {
           includes: 'account_info,average_performance',
           is_active: true,
         },
-        headers: CSPR_API_PROXY_HEADERS,
+        ...(withProxyHeader ? { headers: CSPR_API_PROXY_HEADERS } : {}),
         errorType: 'getValidators',
       });
 
@@ -50,11 +50,12 @@ export class ValidatorsRepository implements IValidatorsRepository {
   async getValidatorsWithStakes({
     network,
     publicKey,
+    withProxyHeader = true,
   }: IGetValidatorsWithStakesParams): Promise<IValidator[]> {
     try {
       const rpcClient = new RpcClient(new HttpHandler(GrpcUrl[network]));
 
-      const eraInfo = await rpcClient.getEraInfoLatest();
+      const eraInfo = await rpcClient.getEraInfoLatest(); // TODO replace with /auction-metrics
 
       const validatorsList = await this._httpProvider.get<DataResponse<IApiValidatorWithStake[]>>({
         url: `${CasperWalletApiUrl[network]}/accounts/${publicKey}/delegations`,
@@ -64,7 +65,7 @@ export class ValidatorsRepository implements IValidatorsRepository {
           era_id: eraInfo.eraSummary.eraID,
           includes: 'account_info,validator_account_info,bidder',
         },
-        headers: CSPR_API_PROXY_HEADERS,
+        ...(withProxyHeader ? { headers: CSPR_API_PROXY_HEADERS } : {}),
         errorType: 'getValidatorsWithStakes',
       });
 

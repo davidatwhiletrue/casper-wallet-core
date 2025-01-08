@@ -35,6 +35,7 @@ export class AccountInfoRepository implements IAccountInfoRepository {
   async getAccountsInfo({
     network,
     accountHashes,
+    withProxyHeader = true,
   }: IGetAccountsInfoParams): Promise<Record<string, IAccountInfo>> {
     try {
       const accountsHashesForFetch = accountHashes.filter(
@@ -46,7 +47,7 @@ export class AccountInfoRepository implements IAccountInfoRepository {
         data: {
           account_hashes: accountsHashesForFetch,
         },
-        headers: CSPR_API_PROXY_HEADERS,
+        ...(withProxyHeader ? { headers: CSPR_API_PROXY_HEADERS } : {}),
         errorType: 'getAccountsInfo',
       });
 
@@ -80,6 +81,7 @@ export class AccountInfoRepository implements IAccountInfoRepository {
   async getAccountsBalances({
     network,
     accountHashes,
+    withProxyHeader = true,
   }: IGetAccountsInfoParams): Promise<Record<string, ICsprBalance>> {
     try {
       const resp = await this._httpProvider.post<DataResponse<IGetCsprBalanceResponse[]>>({
@@ -87,7 +89,7 @@ export class AccountInfoRepository implements IAccountInfoRepository {
         data: {
           account_hashes: accountHashes,
         },
-        headers: CSPR_API_PROXY_HEADERS,
+        ...(withProxyHeader ? { headers: CSPR_API_PROXY_HEADERS } : {}),
         errorType: 'getAccountsBalances',
       });
 
@@ -107,14 +109,17 @@ export class AccountInfoRepository implements IAccountInfoRepository {
     }
   }
 
-  async resolveAccountFromCsprName(csprName: string): Promise<Maybe<IAccountInfo>> {
+  async resolveAccountFromCsprName(
+    csprName: string,
+    withProxyHeader = true,
+  ): Promise<Maybe<IAccountInfo>> {
     try {
       const resp = await this._httpProvider.get<DataResponse<ICloudResolveFromCsprNameResponse>>({
         url: `https://cspr-wallet-api.dev.make.services:443/cspr-name-resolutions/${csprName}`, // TODO replace with prod version
         params: {
           includes: 'resolved_public_key,account_info,centralized_account_info',
         },
-        headers: CSPR_API_PROXY_HEADERS,
+        ...(withProxyHeader ? { headers: CSPR_API_PROXY_HEADERS } : {}),
         errorType: 'resolveAccountFromCsprName',
       });
 
