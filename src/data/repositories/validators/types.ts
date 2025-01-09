@@ -123,3 +123,11 @@ export interface IApiBidder {
   self_stake: number;
   total_stake: number;
 }
+
+export interface IAuctionMetricsResponse {
+  active_bids_number: number;
+  active_validator_number: number;
+  current_era_id: number;
+  total_active_era_stake: string;
+  total_bids_number: number;
+}
