@@ -3,7 +3,7 @@ import { Maybe } from '../../typings';
 
 export interface IToken extends IEntity {
   readonly contractPackageHash: string;
-  readonly contractHash: string;
+  readonly contractHash?: string;
 
   readonly name: string;
   readonly network: Network;

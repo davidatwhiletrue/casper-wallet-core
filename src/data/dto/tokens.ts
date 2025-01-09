@@ -14,7 +14,7 @@ import { Maybe } from '../../typings';
 
 export class TokenDto implements IToken {
   constructor(network: Network, apiToken?: Partial<ApiToken>) {
-    this.contractHash = apiToken?.contractHash ?? '';
+    this.contractHash = apiToken?.contractHash;
     this.contractPackageHash = apiToken?.contract_package_hash ?? '';
     this.id = this.contractPackageHash;
     this.balance = apiToken?.balance ?? '0';
@@ -29,7 +29,7 @@ export class TokenDto implements IToken {
   }
 
   readonly balance: string;
-  readonly contractHash: string;
+  readonly contractHash: string | undefined;
   readonly contractPackageHash: string;
   readonly decimals: number;
   readonly iconUrl: Maybe<string>;

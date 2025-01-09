@@ -40,7 +40,6 @@ export class TokensRepository implements ITokensRepository {
         return new TokenDto(network, {
           ...(token.contract_package ?? {}),
           balance: token.balance,
-          contractHash: token.contract_package.contractHash, // TODO missing?
         });
       });
     } catch (e) {
