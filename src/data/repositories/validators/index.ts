@@ -27,7 +27,7 @@ export class ValidatorsRepository implements IValidatorsRepository {
         url: `${CasperWalletApiUrl[network]}/validators`,
         params: {
           page: 1,
-          page_size: -1, // TODO pagination?
+          page_size: 100, // TODO pagination?
           era_id: eraId,
           includes: 'account_info,average_performance',
           is_active: true,
