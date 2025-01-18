@@ -12,4 +12,5 @@ export interface IGetNftsParams {
   page: number;
   limit?: number;
   withProxyHeader?: boolean;
+  withBurned?: boolean;
 }

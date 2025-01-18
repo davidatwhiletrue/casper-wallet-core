@@ -257,10 +257,12 @@ export interface ICsprTransferResponse {
   amount: string;
   deploy_hash: string;
   from_purse: string;
+  from_purse_public_key: string;
   initiator_account_hash: string;
   initiator_public_key: string;
   to_account_hash: string;
   to_public_key: string;
+  to_purse_public_key: string;
   to_purse: string;
   id: number;
   timestamp: string;

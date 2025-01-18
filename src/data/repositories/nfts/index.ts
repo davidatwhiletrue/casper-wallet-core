@@ -37,6 +37,7 @@ export class NftsRepository implements INftsRepository {
         params: {
           page,
           page_size: limit,
+          is_burned: false,
           includes: 'contract_package',
         },
         ...(withProxyHeader ? { headers: CSPR_API_PROXY_HEADERS } : {}),
