@@ -1,7 +1,10 @@
 import {
   CasperWalletApiUrl,
+  CloudPaginatedResponse,
   CSPR_API_PROXY_HEADERS,
   DataResponse,
+  DEFAULT_PAGE_LIMIT,
+  EMPTY_PAGINATED_RESPONSE,
   IGetGetCurrentEraIdParams,
   IGetValidatorsParams,
   IGetValidatorsWithStakesParams,
@@ -19,15 +22,20 @@ export * from './types';
 export class ValidatorsRepository implements IValidatorsRepository {
   constructor(private _httpProvider: IHttpDataProvider) {}
 
-  async getValidators({ network, withProxyHeader = true }: IGetValidatorsParams) {
+  async getValidators({
+    network,
+    withProxyHeader = true,
+    page,
+    limit = DEFAULT_PAGE_LIMIT * 3,
+  }: IGetValidatorsParams) {
     try {
       const eraId = await this.getCurrentEraId({ network, withProxyHeader });
 
-      const validatorsList = await this._httpProvider.get<DataResponse<IApiValidator[]>>({
+      const resp = await this._httpProvider.get<CloudPaginatedResponse<IApiValidator>>({
         url: `${CasperWalletApiUrl[network]}/validators`,
         params: {
-          page: 1,
-          page_size: 100, // TODO pagination?
+          page,
+          page_size: limit,
           era_id: eraId,
           includes: 'account_info,average_performance',
           is_active: true,
@@ -36,9 +44,16 @@ export class ValidatorsRepository implements IValidatorsRepository {
         errorType: 'getValidators',
       });
 
-      return (validatorsList?.data ?? []).map(apiValidator => {
-        return new ValidatorDto(apiValidator);
-      });
+      if (!resp) {
+        return EMPTY_PAGINATED_RESPONSE;
+      }
+
+      return {
+        itemCount: resp.item_count,
+        pageCount: resp.page_count,
+        pages: resp.pages,
+        data: resp.data.map(apiValidator => new ValidatorDto(apiValidator)),
+      };
     } catch (e) {
       this._processError(e, 'getValidators');
     }
