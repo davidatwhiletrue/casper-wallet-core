@@ -1,5 +1,5 @@
 import {
-  CasperApiUrl,
+  CasperWalletApiUrl,
   DEFAULT_PAGE_LIMIT,
   EMPTY_PAGINATED_RESPONSE,
   CSPR_API_PROXY_HEADERS,
@@ -7,9 +7,10 @@ import {
   NftsError,
   INftsRepository,
   IGetNftsParams,
-  PaginatedResponse,
+  CloudPaginatedResponse,
   INft,
   NftContentType,
+  PaginatedResponse,
 } from '../../../domain';
 import type { IHttpDataProvider } from '../../../domain';
 import { getAccountHashFromPublicKey } from '../../../utils';
@@ -26,17 +27,20 @@ export class NftsRepository implements INftsRepository {
     publicKey,
     page,
     limit = DEFAULT_PAGE_LIMIT,
+    withProxyHeader = true,
   }: IGetNftsParams): Promise<PaginatedResponse<INft>> {
     try {
       const accountHash = getAccountHashFromPublicKey(publicKey);
 
-      const resp = await this._httpProvider.get<PaginatedResponse<IApiNft>>({
-        url: `${CasperApiUrl[network]}/accounts/${accountHash}/nft-tokens`,
+      const resp = await this._httpProvider.get<CloudPaginatedResponse<IApiNft>>({
+        url: `${CasperWalletApiUrl[network]}/accounts/${accountHash}/nft-tokens`,
         params: {
           page,
-          limit,
-          fields: 'contract_package',
+          page_size: limit,
+          is_burned: false,
+          includes: 'contract_package',
         },
+        ...(withProxyHeader ? { headers: CSPR_API_PROXY_HEADERS } : {}),
         errorType: 'getNfts',
       });
 
@@ -45,7 +49,9 @@ export class NftsRepository implements INftsRepository {
       }
 
       return {
-        ...resp,
+        itemCount: resp.item_count,
+        pageCount: resp.page_count,
+        pages: resp.pages,
         data: (resp?.data ?? []).map(nft => new NftDto(nft)),
       };
     } catch (e) {
@@ -53,11 +59,11 @@ export class NftsRepository implements INftsRepository {
     }
   }
 
-  async deriveNftMediaType(url: string): Promise<NftContentType> {
+  async deriveNftMediaType(url: string, withProxyHeader = true): Promise<NftContentType> {
     try {
       const headers = await this._httpProvider.head({
         url,
-        headers: CSPR_API_PROXY_HEADERS,
+        ...(withProxyHeader ? { headers: CSPR_API_PROXY_HEADERS } : {}),
         errorType: 'deriveNftMediaType',
       });
 

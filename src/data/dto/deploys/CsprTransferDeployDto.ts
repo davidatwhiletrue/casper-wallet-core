@@ -19,7 +19,6 @@ import { getAccountInfoFromMap, getCsprFiatAmount } from './common';
 import { Maybe } from '../../../typings';
 import { ICsprTransferResponse } from '../../repositories';
 
-/** @deprecated clarity usage */
 export class CsprTransferDeployDto implements INativeCsprDeploy {
   constructor(
     activePublicKey: string,
@@ -38,20 +37,31 @@ export class CsprTransferDeployDto implements INativeCsprDeploy {
     this.executionTypeId = 6;
     this.status = 'success'; // CSPR transfer cannot have another status
 
-    const callerPublicKey = data?.fromAccountPublicKey ?? data?.fromAccount ?? '';
-    const callerKeyType: AccountKeyType = data?.fromAccountPublicKey ? 'publicKey' : 'accountHash';
+    const callerPublicKey =
+      data?.initiator_public_key ??
+      data?.from_purse_public_key ??
+      data?.initiator_account_hash ??
+      '';
+    const callerKeyType: AccountKeyType =
+      data?.initiator_public_key || data?.from_purse_public_key ? 'publicKey' : 'accountHash';
     this.callerAccountInfo = getAccountInfoFromMap(accountInfoMap, callerPublicKey, callerKeyType);
     this.callerPublicKey = this.callerAccountInfo?.publicKey ?? callerPublicKey;
     this.callerKeyType = this.callerAccountInfo?.publicKey ? 'publicKey' : callerKeyType;
 
-    const recipientKey = data?.toAccountPublicKey ?? data?.toAccount ?? data?.targetPurse ?? '';
-    const recipientKeyType = data?.toAccountPublicKey
-      ? 'publicKey'
-      : data?.toAccount
-        ? 'accountHash'
-        : data?.targetPurse
-          ? 'purse'
-          : 'purse';
+    const recipientKey =
+      data?.to_public_key ??
+      data?.to_purse_public_key ??
+      data?.to_account_hash ??
+      data?.to_purse ??
+      '';
+    const recipientKeyType =
+      data?.to_public_key || data?.to_purse_public_key
+        ? 'publicKey'
+        : data?.to_account_hash
+          ? 'accountHash'
+          : data?.to_purse
+            ? 'purse'
+            : 'purse';
     this.recipientAccountInfo = getAccountInfoFromMap(
       accountInfoMap,
       recipientKey,
@@ -74,7 +84,7 @@ export class CsprTransferDeployDto implements INativeCsprDeploy {
     this.transfersActionsResult = [];
     this.nftActionsResult = [];
     this.cep18ActionsResult = [];
-    this.deployHash = data?.deployHash ?? '';
+    this.deployHash = data?.deploy_hash ?? '';
     this.id = getUniqueId();
   }
 

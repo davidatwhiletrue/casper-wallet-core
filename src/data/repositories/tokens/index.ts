@@ -1,6 +1,5 @@
 import {
   CSPR_COIN,
-  CasperApiUrl,
   isTokensError,
   TokensError,
   HttpClientNotFoundError,
@@ -23,15 +22,17 @@ export * from './types';
 export class TokensRepository implements ITokensRepository {
   constructor(private _httpProvider: IHttpDataProvider) {}
 
-  async getTokens({ network, publicKey }: IGetTokensParams) {
+  async getTokens({ network, publicKey, withProxyHeader = true }: IGetTokensParams) {
     try {
       const accountHash = getAccountHashFromPublicKey(publicKey);
 
       const tokensList = await this._httpProvider.get<DataResponse<Erc20Token[]>>({
-        url: `${CasperApiUrl[network]}/accounts/${accountHash}/erc20-tokens`,
+        url: `${CasperWalletApiUrl[network]}/accounts/${accountHash}/ft-token-ownership`,
         params: {
-          fields: 'latest_contract,contract_package',
+          page_size: 100, // TODO pagination?
+          includes: 'contract_package',
         },
+        ...(withProxyHeader ? { headers: CSPR_API_PROXY_HEADERS } : {}),
         errorType: 'getTokens',
       });
 
@@ -39,7 +40,6 @@ export class TokensRepository implements ITokensRepository {
         return new TokenDto(network, {
           ...(token.contract_package ?? {}),
           balance: token.balance,
-          contractHash: token.latest_contract?.contract_hash,
         });
       });
     } catch (e) {
@@ -47,7 +47,7 @@ export class TokensRepository implements ITokensRepository {
     }
   }
 
-  async getCsprBalance({ publicKey, network }: IGetCsprBalanceParams) {
+  async getCsprBalance({ publicKey, network, withProxyHeader = true }: IGetCsprBalanceParams) {
     try {
       const resp = await this._httpProvider.get<DataResponse<IGetCsprBalanceResponse>>({
         url: `${CasperWalletApiUrl[network]}/accounts/${publicKey}`,
@@ -55,7 +55,7 @@ export class TokensRepository implements ITokensRepository {
         params: {
           includes: 'delegated_balance,undelegating_balance',
         },
-        headers: CSPR_API_PROXY_HEADERS,
+        ...(withProxyHeader ? { headers: CSPR_API_PROXY_HEADERS } : {}),
       });
 
       return new CsprBalanceDto(resp?.data);
@@ -89,10 +89,14 @@ export class TokensRepository implements ITokensRepository {
     }
   }
 
-  async getCsprFiatCurrencyRate({ network }: IGetCsprFiatCurrencyRateParams) {
+  async getCsprFiatCurrencyRate({
+    network,
+    withProxyHeader = true,
+  }: IGetCsprFiatCurrencyRateParams) {
     try {
       const resp = await this._httpProvider.get<IGetCurrencyRateResponse>({
-        url: `${CasperApiUrl[network]}/rates/1/amount`,
+        url: `${CasperWalletApiUrl[network]}/rates/1/amount`,
+        ...(withProxyHeader ? { headers: CSPR_API_PROXY_HEADERS } : {}),
         errorType: 'getCsprFiatCurrencyRate',
       });
 

@@ -11,13 +11,16 @@ export interface ITokensRepository {
 export interface IGetTokensParams {
   publicKey: string;
   network: CasperNetwork;
+  withProxyHeader?: boolean;
 }
 
 export interface IGetCsprBalanceParams {
   publicKey: string;
   network: CasperNetwork;
+  withProxyHeader?: boolean;
 }
 
 export interface IGetCsprFiatCurrencyRateParams {
   network: CasperNetwork;
+  withProxyHeader?: boolean;
 }

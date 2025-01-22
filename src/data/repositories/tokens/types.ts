@@ -1,4 +1,4 @@
-import { Network } from '../../../domain';
+import { DataResponse, Network } from '../../../domain';
 
 export interface IGetCsprBalanceResponse {
   balance: number;
@@ -10,36 +10,30 @@ export interface IGetCsprBalanceResponse {
   main_purse_uref?: string;
 }
 
-export interface IGetCurrencyRateResponse {
-  data: number;
-}
+export type IGetCurrencyRateResponse = DataResponse<{
+  currency_id: number;
+  amount: number;
+  created: string;
+}>;
 
 export interface Erc20Token {
-  account_hash: string;
   balance: string;
   contract_package_hash: string;
-  latest_contract?: {
-    contract_hash: string;
-    contract_package_hash: string;
-    deploy_hash: string;
-    contract_type_id: number;
-    contract_version: number;
-    is_disabled: boolean;
-    protocol_version: string;
-    timestamp: string;
-  };
+  owner_hash: string;
+  owner_type: number;
   contract_package: ContractPackage;
 }
 
 export interface ContractPackage {
-  contract_description: string | null;
-  contract_name: string;
+  description: string | null;
+  name: string;
   contract_package_hash: string;
   contract_type_id: number;
   icon_url: string | null;
   metadata: {
     balances_uref: string;
     decimals: number;
+    name: string;
     symbol: string;
     total_supply_uref: string;
   };

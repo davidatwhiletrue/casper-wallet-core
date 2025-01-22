@@ -1,3 +1,5 @@
+import { ICloudAccountInfoResult } from '../accountInfo';
+
 export interface IApiValidator {
   fee: number | string;
   is_active: boolean;
@@ -9,11 +11,10 @@ export interface IApiValidator {
   network_share: string;
   era_id: number;
   delegators_number: number;
-  delegator_stake: string;
+  delegators_stake: number;
   rank: number;
   average_performance?: IValidatorAveragePerformance;
   account_info?: IValidatorAccountInfo;
-  stake?: string;
 }
 
 export interface IValidatorAveragePerformance {
@@ -103,7 +104,30 @@ export interface IApiValidatorWithStake {
   public_key: string;
   stake: string;
   bonding_purse: string;
-  account_info?: IValidatorAccountInfo;
-  validator_account_info?: IValidatorAccountInfo;
-  validator: IApiValidator;
+  /** delegator */
+  account_info?: ICloudAccountInfoResult;
+  validator_account_info?: ICloudAccountInfoResult;
+  bidder: IApiBidder;
+}
+
+export interface IApiBidder {
+  delegators_number: number;
+  delegators_stake: number;
+  era_id: number;
+  fee: number;
+  is_active: boolean;
+  network_share: string;
+  public_key: string;
+  rank: number;
+  self_share: string;
+  self_stake: number;
+  total_stake: number;
+}
+
+export interface IAuctionMetricsResponse {
+  active_bids_number: number;
+  active_validator_number: number;
+  current_era_id: number;
+  total_active_era_stake: string;
+  total_bids_number: number;
 }

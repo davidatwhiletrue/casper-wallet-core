@@ -3,7 +3,7 @@ import { INft, NftContentType } from './entities';
 
 export interface INftsRepository {
   getNfts(params: IGetNftsParams): Promise<PaginatedResponse<INft>>;
-  deriveNftMediaType(url: string): Promise<NftContentType>;
+  deriveNftMediaType(url: string, withProxyHeader?: boolean): Promise<NftContentType>;
 }
 
 export interface IGetNftsParams {
@@ -11,4 +11,6 @@ export interface IGetNftsParams {
   network: CasperNetwork;
   page: number;
   limit?: number;
+  withProxyHeader?: boolean;
+  withBurned?: boolean;
 }

@@ -366,17 +366,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@make-software/ces-js-parser@npm:^1.3.3":
-  version: 1.3.3
-  resolution: "@make-software/ces-js-parser@npm:1.3.3"
-  dependencies:
-    ts-results: "npm:^3.3.0"
-  peerDependencies:
-    casper-js-sdk: ^2.12.0
-  checksum: 10c0/1b78c10585a85c851dfa0a7e4ac5c66793a80c192b96558248e62b5361535ebec1331ece6f6cfc81ba50c4468bc6e141fb6f78b7eb0755bf8524f0442f96f75d
-  languageName: node
-  linkType: hard
-
 "@nicolo-ribaudo/eslint-scope-5-internals@npm:5.1.1-v1":
   version: 5.1.1-v1
   resolution: "@nicolo-ribaudo/eslint-scope-5-internals@npm:5.1.1-v1"
@@ -386,21 +375,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@noble/curves@npm:^1.1.0":
-  version: 1.5.0
-  resolution: "@noble/curves@npm:1.5.0"
+"@noble/curves@npm:^1.1.0, @noble/curves@npm:~1.8.0":
+  version: 1.8.0
+  resolution: "@noble/curves@npm:1.8.0"
   dependencies:
-    "@noble/hashes": "npm:1.4.0"
-  checksum: 10c0/89faed98e7ff1fee086777afcf63b7ec237121ebfe09495eb9ff7f73c7dd696000c795a24a1bedadc804b592d4b3c655f2e4a9fe9a3afe312a9e6376558d3737
-  languageName: node
-  linkType: hard
-
-"@noble/curves@npm:~1.4.0":
-  version: 1.4.2
-  resolution: "@noble/curves@npm:1.4.2"
-  dependencies:
-    "@noble/hashes": "npm:1.4.0"
-  checksum: 10c0/65620c895b15d46e8087939db6657b46a1a15cd4e0e4de5cd84b97a0dfe0af85f33a431bb21ac88267e3dc508618245d4cb564213959d66a84d690fe18a63419
+    "@noble/hashes": "npm:1.7.0"
+  checksum: 10c0/3ebb1795f3f7d74c879bc6262a3444061585a2cab90b7b637dc57d931063dd0c95be858a4c2389e932651825dbc461c215dbcf43984a232de3bd6b2d326ba555
   languageName: node
   linkType: hard
 
@@ -411,10 +391,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@noble/hashes@npm:1.4.0, @noble/hashes@npm:^1.2.0, @noble/hashes@npm:~1.4.0":
-  version: 1.4.0
-  resolution: "@noble/hashes@npm:1.4.0"
-  checksum: 10c0/8c3f005ee72e7b8f9cff756dfae1241485187254e3f743873e22073d63906863df5d4f13d441b7530ea614b7a093f0d889309f28b59850f33b66cb26a779a4a5
+"@noble/hashes@npm:1.7.0, @noble/hashes@npm:^1.2.0, @noble/hashes@npm:~1.7.0":
+  version: 1.7.0
+  resolution: "@noble/hashes@npm:1.7.0"
+  checksum: 10c0/1ef0c985ebdb5a1bd921ea6d959c90ba826af3ae05b40b459a703e2a5e9b259f190c6e92d6220fb3800e2385521e4159e238415ad3f6b79c52f91dd615e491dc
   languageName: node
   linkType: hard
 
@@ -509,40 +489,40 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@scure/base@npm:~1.1.6":
-  version: 1.1.7
-  resolution: "@scure/base@npm:1.1.7"
-  checksum: 10c0/2d06aaf39e6de4b9640eb40d2e5419176ebfe911597856dcbf3bc6209277ddb83f4b4b02cb1fd1208f819654268ec083da68111d3530bbde07bae913e2fc2e5d
+"@scure/base@npm:~1.2.1":
+  version: 1.2.1
+  resolution: "@scure/base@npm:1.2.1"
+  checksum: 10c0/e61068854370855b89c50c28fa4092ea6780f1e0db64ea94075ab574ebcc964f719a3120dc708db324991f4b3e652d92ebda03fce2bf6a4900ceeacf9c0ff933
   languageName: node
   linkType: hard
 
 "@scure/bip32@npm:^1.1.5":
-  version: 1.4.0
-  resolution: "@scure/bip32@npm:1.4.0"
+  version: 1.6.1
+  resolution: "@scure/bip32@npm:1.6.1"
   dependencies:
-    "@noble/curves": "npm:~1.4.0"
-    "@noble/hashes": "npm:~1.4.0"
-    "@scure/base": "npm:~1.1.6"
-  checksum: 10c0/6849690d49a3bf1d0ffde9452eb16ab83478c1bc0da7b914f873e2930cd5acf972ee81320e3df1963eb247cf57e76d2d975b5f97093d37c0e3f7326581bf41bd
+    "@noble/curves": "npm:~1.8.0"
+    "@noble/hashes": "npm:~1.7.0"
+    "@scure/base": "npm:~1.2.1"
+  checksum: 10c0/dbac10404a50a092637372cd4d29a1a447c608fe5ffebad1070c9788ea235f61dca603f1af3a45402b4d4d0a31dc35efdfa002cc938cbb3ddab74e1d14691c58
   languageName: node
   linkType: hard
 
 "@scure/bip39@npm:^1.2.0":
-  version: 1.3.0
-  resolution: "@scure/bip39@npm:1.3.0"
+  version: 1.5.1
+  resolution: "@scure/bip39@npm:1.5.1"
   dependencies:
-    "@noble/hashes": "npm:~1.4.0"
-    "@scure/base": "npm:~1.1.6"
-  checksum: 10c0/1ae1545a7384a4d9e33e12d9e9f8824f29b0279eb175b0f0657c0a782c217920054f9a1d28eb316a417dfc6c4e0b700d6fbdc6da160670107426d52fcbe017a8
+    "@noble/hashes": "npm:~1.7.0"
+    "@scure/base": "npm:~1.2.1"
+  checksum: 10c0/e4966f2d6eb7b3ff1c07f27988863f06b05cfa605d73682e3ae09254ca5a535f3d34564917d890fe0f5b0c3e427a05c5d3cf6053e346298a46a3fac39949b7ad
   languageName: node
   linkType: hard
 
 "@types/bn.js@npm:*":
-  version: 5.1.5
-  resolution: "@types/bn.js@npm:5.1.5"
+  version: 5.1.6
+  resolution: "@types/bn.js@npm:5.1.6"
   dependencies:
     "@types/node": "npm:*"
-  checksum: 10c0/e9f375b43d8119ed82aed2090f83d4cda8afbb63ba13223afb02fa7550258ff90acd76d65cd7186838644048f085241cd98a3a512d8d187aa497c6039c746ac8
+  checksum: 10c0/073d383d87afea513a8183ce34af7bc0a7a798d057c7ae651982b7f30dd7d93f33247323bca3ba39f1f6af146b564aff547b15467bdf9fc922796c17e8426bf6
   languageName: node
   linkType: hard
 
@@ -563,11 +543,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 22.3.0
-  resolution: "@types/node@npm:22.3.0"
+  version: 22.10.5
+  resolution: "@types/node@npm:22.10.5"
   dependencies:
-    undici-types: "npm:~6.18.2"
-  checksum: 10c0/855be3b97f4262a84818f889ff898e147dcef4f72b866e3551a8367380cdb63a45cf3929f09d9a0647f62706f8d4772e91a1ecd1bd7c6a80d6744c2b0cbca608
+    undici-types: "npm:~6.20.0"
+  checksum: 10c0/6a0e7d1fe6a86ef6ee19c3c6af4c15542e61aea2f4cee655b6252efb356795f1f228bc8299921e82924e80ff8eca29b74d9dd0dd5cc1a90983f892f740b480df
   languageName: node
   linkType: hard
 
@@ -586,11 +566,11 @@ __metadata:
   linkType: hard
 
 "@types/ws@npm:^8.2.2":
-  version: 8.5.12
-  resolution: "@types/ws@npm:8.5.12"
+  version: 8.5.13
+  resolution: "@types/ws@npm:8.5.13"
   dependencies:
     "@types/node": "npm:*"
-  checksum: 10c0/3fd77c9e4e05c24ce42bfc7647f7506b08c40a40fe2aea236ef6d4e96fc7cb4006a81ed1b28ec9c457e177a74a72924f4768b7b4652680b42dfd52bc380e15f9
+  checksum: 10c0/a5430aa479bde588e69cb9175518d72f9338b6999e3b2ae16fc03d3bdcff8347e486dc031e4ed14601260463c07e1f9a0d7511dfc653712b047c439c680b0b34
   languageName: node
   linkType: hard
 
@@ -784,13 +764,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "CasperWalletCore@workspace:."
   dependencies:
-    "@make-software/ces-js-parser": "npm:^1.3.3"
     "@react-native/eslint-config": "npm:0.74.83"
     "@react-native/typescript-config": "npm:0.74.83"
     "@types/uuid": "npm:^10.0.0"
     apisauce: "npm:^3.0.1"
-    casper-cep18-js-client: "npm:^1.0.2"
-    casper-js-sdk: "npm:2.15.4"
+    casper-js-sdk: "npm:5.0.3-beta2"
     date-fns: "npm:^2.30.0"
     decimal.js: "npm:^10.4.3"
     eslint: "npm:8.22.0"
@@ -1036,6 +1014,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios@npm:^1.7.9":
+  version: 1.7.9
+  resolution: "axios@npm:1.7.9"
+  dependencies:
+    follow-redirects: "npm:^1.15.6"
+    form-data: "npm:^4.0.0"
+    proxy-from-env: "npm:^1.1.0"
+  checksum: 10c0/b7a41e24b59fee5f0f26c1fc844b45b17442832eb3a0fb42dd4f1430eb4abc571fe168e67913e8a1d91c993232bd1d1ab03e20e4d1fee8c6147649b576fc1b0b
+  languageName: node
+  linkType: hard
+
 "balanced-match@npm:^1.0.0":
   version: 1.0.2
   resolution: "balanced-match@npm:1.0.2"
@@ -1044,9 +1033,9 @@ __metadata:
   linkType: hard
 
 "bn.js@npm:^4.0.0, bn.js@npm:^4.11.8, bn.js@npm:^4.11.9":
-  version: 4.12.0
-  resolution: "bn.js@npm:4.12.0"
-  checksum: 10c0/9736aaa317421b6b3ed038ff3d4491935a01419ac2d83ddcfebc5717385295fcfcf0c57311d90fe49926d0abbd7a9dbefdd8861e6129939177f7e67ebc645b21
+  version: 4.12.1
+  resolution: "bn.js@npm:4.12.1"
+  checksum: 10c0/b7f37a0cd5e4b79142b6f4292d518b416be34ae55d6dd6b0f66f96550c8083a50ffbbf8bda8d0ab471158cb81aa74ea4ee58fe33c7802e4a30b13810e98df116
   languageName: node
   linkType: hard
 
@@ -1133,22 +1122,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"casper-cep18-js-client@npm:^1.0.2":
-  version: 1.0.3
-  resolution: "casper-cep18-js-client@npm:1.0.3"
-  dependencies:
-    "@ethersproject/bignumber": "npm:^5.7.0"
-    "@noble/hashes": "npm:^1.2.0"
-  peerDependencies:
-    "@make-software/ces-js-parser": ^1.3.3
-    casper-js-sdk: ^2.15.4
-  checksum: 10c0/8b08785fad5f55f091d055e2b319f1edd7bad3b78f4e2e7c58decf402443ff0762f325997ad815a5987cbcce834c3d5ae8aeb2f333164b6ba75270f6571308a9
-  languageName: node
-  linkType: hard
-
-"casper-js-sdk@npm:2.15.4":
-  version: 2.15.4
-  resolution: "casper-js-sdk@npm:2.15.4"
+"casper-js-sdk@npm:5.0.3-beta2":
+  version: 5.0.3-beta2
+  resolution: "casper-js-sdk@npm:5.0.3-beta2"
   dependencies:
     "@ethersproject/bignumber": "npm:^5.0.8"
     "@ethersproject/bytes": "npm:^5.0.5"
@@ -1161,6 +1137,7 @@ __metadata:
     "@scure/bip32": "npm:^1.1.5"
     "@scure/bip39": "npm:^1.2.0"
     "@types/ws": "npm:^8.2.2"
+    axios: "npm:^1.7.9"
     eventsource: "npm:^2.0.2"
     glob: "npm:^7.1.6"
     humanize-duration: "npm:^3.24.0"
@@ -1170,7 +1147,7 @@ __metadata:
     reflect-metadata: "npm:^0.1.13"
     ts-results: "npm:@casperlabs/ts-results@^3.3.4"
     typedjson: "npm:^1.6.0-rc2"
-  checksum: 10c0/483eb10162f0f126a93e54f28f4be918d81bc65d61e7a16f73d5748a1ef96c12432da2fa20880cb0d43c9e3f31519d80e8304d0cb50e0136e528620391f2b757
+  checksum: 10c0/e9be6d5029337d18f3ea8dc6517358a596df9d2d79962eeb9a6a603964d007e8635cf92da6b923bf168f1af991b17af244e76a7a86566d1fa8fe01b1ae9d8621
   languageName: node
   linkType: hard
 
@@ -1452,8 +1429,8 @@ __metadata:
   linkType: hard
 
 "elliptic@npm:^6.4.1":
-  version: 6.5.7
-  resolution: "elliptic@npm:6.5.7"
+  version: 6.6.1
+  resolution: "elliptic@npm:6.6.1"
   dependencies:
     bn.js: "npm:^4.11.9"
     brorand: "npm:^1.1.0"
@@ -1462,7 +1439,7 @@ __metadata:
     inherits: "npm:^2.0.4"
     minimalistic-assert: "npm:^1.0.1"
     minimalistic-crypto-utils: "npm:^1.0.1"
-  checksum: 10c0/799959b6c54ea3564e8961f35abdf8c77e37617f3051614b05ab1fb6a04ddb65bd1caa75ed1bae375b15dda312a0f79fed26ebe76ecf05c5a7af244152a601b8
+  checksum: 10c0/8b24ef782eec8b472053793ea1e91ae6bee41afffdfcb78a81c0a53b191e715cbe1292aa07165958a9bbe675bd0955142560b1a007ffce7d6c765bcaf951a867
   languageName: node
   linkType: hard
 
@@ -3780,13 +3757,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-results@npm:^3.3.0":
-  version: 3.3.0
-  resolution: "ts-results@npm:3.3.0"
-  checksum: 10c0/507659005733dd102895e868fe1de6f4c39998bcf188863bdc2d18dc5e8ced57be2e83fe9ee53adbabc414fd53e26e8654c7fa0273d2668decc1731d274dbf74
-  languageName: node
-  linkType: hard
-
 "tslib@npm:^1.8.1":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
@@ -3794,7 +3764,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.1, tslib@npm:^2.4.1, tslib@npm:^2.6.2":
+"tslib@npm:^2.0.1, tslib@npm:^2.4.1":
+  version: 2.8.1
+  resolution: "tslib@npm:2.8.1"
+  checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.6.2":
   version: 2.6.3
   resolution: "tslib@npm:2.6.3"
   checksum: 10c0/2598aef53d9dbe711af75522464b2104724d6467b26a60f2bdac8297d2b5f1f6b86a71f61717384aa8fd897240467aaa7bcc36a0700a0faf751293d1331db39a
@@ -3928,10 +3905,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~6.18.2":
-  version: 6.18.2
-  resolution: "undici-types@npm:6.18.2"
-  checksum: 10c0/dea28163891a5af7624c120107dc07a74c369ee94c6dd1d0de29af061ee129fac4846f97130589f4436b85f6102c73d30328ca908be02626dd8ab9fec5642aba
+"undici-types@npm:~6.20.0":
+  version: 6.20.0
+  resolution: "undici-types@npm:6.20.0"
+  checksum: 10c0/68e659a98898d6a836a9a59e6adf14a5d799707f5ea629433e025ac90d239f75e408e2e5ff086afc3cace26f8b26ee52155293564593fbb4a2f666af57fc59bf
   languageName: node
   linkType: hard
 
