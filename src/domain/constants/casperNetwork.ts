@@ -14,7 +14,7 @@ export const CasperLiveUrl: Record<CasperNetwork, string> = {
 
 export const CasperWalletApiUrl: Record<CasperNetwork, string> = {
   mainnet: 'https://api.mainnet.casperwallet.io',
-  testnet: 'https://cspr-wallet-api.dev.make.services',
+  testnet: 'https://cspr-click-accounts.dev.make.services/api/wallet-proxy',
   devnet: 'https://cspr-wallet-api.dev.make.services',
   integration: 'https://api.integration.casperwallet.io',
 };
@@ -28,7 +28,7 @@ export const OnRampApiUrl = 'https://onramp-api.cspr.click/api';
 
 export const GrpcUrl: Record<CasperNetwork, string> = {
   mainnet: 'https://node.cspr.cloud/rpc',
-  testnet: 'https://node.testnet.cspr.cloud/rpc',
+  testnet: 'https://cspr-click-accounts.dev.make.services/api/node-proxy/rpc',
   devnet: 'https://cspr-api-gateway.dev.make.services/cspr-node-proxy-rpc-dev-condor/rpc',
   integration: 'https://node.integration.cspr.cloud/rpc',
 };
