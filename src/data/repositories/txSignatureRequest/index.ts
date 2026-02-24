@@ -48,6 +48,7 @@ export class TxSignatureRequestRepository implements ITxSignatureRequestReposito
     private _contractPackageRepository: IContractPackageRepository,
     private _casperWalletApiByEnvUrl: Record<IEnv, string>,
     private _grpcUrl: Record<CasperNetwork, string>,
+    private _httpAuthorizationHeader: string,
   ) {}
 
   async prepareSignatureRequest({
@@ -133,7 +134,11 @@ export class TxSignatureRequestRepository implements ITxSignatureRequestReposito
 
       try {
         const handler = new HttpHandler(this._grpcUrl[network], 'fetch');
-
+        if (this._httpAuthorizationHeader) {
+          handler.setCustomHeaders({
+            Authorization: this._httpAuthorizationHeader
+          });
+        }
         if (withProxyHeader) {
           handler.setReferrer(CSPR_API_PROXY_HEADERS.Referer);
         }
@@ -266,6 +271,11 @@ export class TxSignatureRequestRepository implements ITxSignatureRequestReposito
       }
 
       const handler = new HttpHandler(this._grpcUrl[network], 'fetch');
+      if (this._httpAuthorizationHeader) {
+        handler.setCustomHeaders({
+          Authorization: this._httpAuthorizationHeader
+        });
+      }
 
       if (withProxyHeader) {
         handler.setReferrer(CSPR_API_PROXY_HEADERS.Referer);
