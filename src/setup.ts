@@ -72,6 +72,7 @@ export const setupRepositories = ({
     contractPackageRepository,
     casperWalletApiByEnvUrl,
     grpcUrl,
+    httpAuthorizationHeader
   );
 
   return {
